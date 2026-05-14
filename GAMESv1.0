@@ -1,0 +1,433 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
+#include <chrono>
+#include <thread>
+#include <utility>
+using namespace std;
+
+void clear()
+{
+    std::cout << "\033[2J\033[1;1H";
+}
+
+int main()
+{
+	int score=0;
+	int a;
+	cout<<"hi!"<<endl<<"welcome to GAMES(v1.0)!"<<endl;
+start:
+	cout<<"which game do you want to play?"<<endl<<"1.guess the number 2.slot machine 3.FOCUS 4.load 5.save 6.exit----your current score:"<<score<<endl;
+	cin>>a;
+	if (a==1)
+	{
+		int num;
+		int b;
+		cout<<"choose the difficulty(1~3)"<<endl;
+game1:
+		cin>>b;
+		srand(time(0));
+		switch(b)
+		{
+		case(1):
+		{
+			num=rand()%100+1;
+			break;
+		}
+		case(2):
+		{
+			num=rand()%1000+1;
+		}
+		case(3):
+		{
+			num=rand()%10000+1;
+		}
+		default:
+		{
+			cout<<"this not between 1~3! type again!"<<endl;
+			goto game1;
+		}
+		}
+		cout<<"game start!"<<endl;
+		int guess=-1;
+		int timesofguess=0;
+		while(guess!=num)
+		{
+			cin>>guess;
+			if (guess<num)
+			{
+				cout<<"too small!"<<endl;
+			}
+			if (guess>num)
+			{
+				cout<<"too big!"<<endl;
+			}
+			timesofguess++;
+		}
+		cout<<"you win!"<<endl;
+		timesofguess=(5+3*b)-timesofguess;
+		if(timesofguess<0)
+		{
+			timesofguess=0;
+		}
+		cout<<"you get "<<timesofguess<<" points"<<endl;
+		score+=timesofguess;
+		goto start;
+	}
+	else if(a==2)
+	{
+        int score2=0;
+		srand(time(0));
+		int n1=rand()%5+1;
+		cout<<"| "<<n1<<" |   |   |"<<endl;
+		this_thread::sleep_for(chrono::seconds(1));
+		srand(time(0));
+		int n2=rand()%5+1;
+		cout<<"| "<<n1<<" | "<<n2<<" |   |"<<endl;
+		this_thread::sleep_for(chrono::seconds(1));
+		srand(time(0));
+		int n3=rand()%5+1;
+		cout<<"| "<<n1<<" | "<<n2<<" | "<<n3<<" |"<<endl;
+		this_thread::sleep_for(chrono::seconds(1));
+		if(n1==n2||n2==n3||n3==n1)
+		{
+		    score2+=3;
+		}
+		if(n1==n2&&n2==n3)
+		{
+		    score2+=2;
+		}
+		if(n1+n2+n3+score2==6)
+		{
+		    score2+=2;
+		}
+		if(score2==0)
+		{
+		    score2=-8;
+		}
+		score2-=2;
+		if(n1==4||n2==4||n3==4)
+		{
+		    score2=round(score2*1.3);
+		}
+		cout<<"you get "<<score2<<" points"<<endl;
+		score+=score2;
+		goto start;
+	}
+	else if(a==3)
+	{
+	    cout<<"choose difficulty(1~3)"<<endl;
+	    int difficulty,random1,random2;
+	    int num=0;
+	    c:
+	    cin>>difficulty;
+	    if(difficulty>3||difficulty<1||difficulty!=round(difficulty))
+	    {
+	        cout<<"this not between 1~3! type again!"<<endl;
+	        goto c;
+	    }
+	    clear();
+	    int a[8]={0,0,0,0,0,0,0,0};
+	    srand(time(0));
+	    a[(rand()%8)]=1;
+	    cout<<a[0]<<"   "<<a[1]<<endl<<endl<<a[2]<<"   "<<a[3]<<endl<<endl<<a[4]<<"   "<<a[5]<<endl<<endl<<a[6]<<"   "<<a[7]<<endl;
+	    this_thread::sleep_for(chrono::seconds(1));
+	    clear();
+	    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	    this_thread::sleep_for(chrono::seconds(1));
+	    clear();
+	    for(int i=1;i<=(difficulty*10);i++)
+	    {
+	        srand(time(0));
+	        random1=rand()%4+1;
+	        switch(random1)
+	        {
+	            case(1):
+	            {
+	                srand(time(0));
+	                random2=rand()%2+1;
+	                if(random2==1)
+	                {
+	                    cout<<"   0 "<<endl<<"0    "<<endl<<"     0"<<endl<<" 0  "<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;//counterclockwise
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"  0  "<<endl<<"    0"<<endl<<"0     "<<endl<<"   0"<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    num=a[1];
+	                    a[1]=a[3];
+	                    a[3]=a[2];
+	                    a[2]=a[0];
+	                    a[0]=num;
+	                    num=0;
+	                }
+	                else
+	                {
+	                    cout<<"  0  "<<endl<<"    0"<<endl<<"0     "<<endl<<"   0"<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;//clockwise
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"   0 "<<endl<<"0    "<<endl<<"     0"<<endl<<" 0  "<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    num=a[1];
+	                    a[1]=a[0];
+	                    a[0]=a[2];
+	                    a[2]=a[3];
+	                    a[3]=num;
+	                    num=0;
+	                }
+	                break;
+	            }
+	            case(2):
+	            {
+	                srand(time(0));
+	                random2=rand()%2+1;
+	                if(random2==1)
+	                {
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<"   0 "<<endl<<"0    "<<endl<<"     0"<<endl<<" 0  "<<endl;//counterclockwise
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<"  0  "<<endl<<"     0"<<endl<<"0     "<<endl<<"   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    num=a[5];
+	                    a[5]=a[7];
+	                    a[7]=a[6];
+	                    a[6]=a[4];
+	                    a[4]=num;
+	                    num=0;
+	                }
+	                else
+	                {
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<"  0  "<<endl<<"     0"<<endl<<"0     "<<endl<<"   0"<<endl;//clockwise
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<"   0 "<<endl<<"0    "<<endl<<"     0"<<endl<<" 0  "<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    num=a[5];
+	                    a[5]=a[4];
+	                    a[4]=a[6];
+	                    a[6]=a[7];
+	                    a[7]=num;
+	                    num=0;
+	                }
+	                break;
+	            }
+	            case(3):
+	            {
+	                srand(time(0));
+	                random2=rand()%2+1;
+	                if(random2==1)
+	                {
+	                    cout<<"   0 "<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<" 0   "<<endl;//counterclockwise
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<" 0   "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"   0 "<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    num=a[1];
+	                    a[1]=a[3];
+	                    a[3]=a[5];
+	                    a[5]=a[7];
+	                    a[7]=a[6];
+	                    a[6]=a[4];
+	                    a[4]=a[2];
+	                    a[2]=a[0];
+	                    a[0]=num;
+	                }
+	                else
+	                {
+	                    cout<<" 0   "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"   0 "<<endl;//clockwise
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"   0 "<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<"0    "<<endl<<"    0"<<endl<<" 0   "<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(110));
+	                    clear();
+	                    num=a[1];
+	                    a[1]=a[0];
+	                    a[0]=a[2];
+	                    a[2]=a[4];
+	                    a[4]=a[6];
+	                    a[6]=a[7];
+	                    a[7]=a[5];
+	                    a[5]=a[3];
+	                    a[3]=num;
+	                    
+	                }
+	                break;
+	            }
+	            case(4):
+	            {
+	                srand(time(0));
+	                random2=rand()%2+1;
+	                if(random2==1)
+	                {
+	                    cout<<" 0  0"<<endl<<endl<<"0   0"<<endl<<endl<<"0    0"<<endl<<endl<<"0  0"<<endl;//upleft
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"  0 0"<<endl<<endl<<"0   0"<<endl<<endl<<"0     0"<<endl<<endl<<"0 0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"    0"<<endl<<"0 0  "<<endl<<"0   0"<<endl<<endl<<"0    "<<endl<<"  0    0"<<endl<<"0    "<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"  0 0"<<endl<<endl<<"0 0"<<endl<<endl<<"0     0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<" 0  0"<<endl<<endl<<"0  0"<<endl<<endl<<"0    0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    swap(a[0],a[2]);
+	                    swap(a[5],a[7]);
+	                }
+	                else
+	                {
+	                    cout<<"0    0"<<endl<<endl<<"0  0"<<endl<<endl<<"0   0"<<endl<<endl<<" 0  0"<<endl;//upright
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0     0"<<endl<<endl<<"0 0"<<endl<<endl<<"0   0"<<endl<<endl<<"  0 0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0     "<<endl<<"  0   0"<<endl<<"0 0"<<endl<<endl<<"    0"<<endl<<"0  0"<<endl<<"    0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0 0"<<endl<<endl<<"0     0"<<endl<<endl<<"  0 0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0  0"<<endl<<endl<<"0    0"<<endl<<endl<<" 0  0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    swap(a[1],a[3]);
+	                    swap(a[4],a[6]);
+	                }
+	                break;
+	            }
+	            case(5):
+	            {
+	                srand(time(0));
+	                random2=rand()%2+1;
+	                if(random2==1)
+	                {
+	                    cout<<"    0"<<endl<<"0    "<<endl<<"0   0"<<endl<<"0    "<<endl<<"     "<<endl<<"    0"<<endl<<"0   0"<<endl;//1,3
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"   0 "<<endl<<" 0   "<<endl<<"0   0"<<endl<<" 0   "<<endl<<"     "<<endl<<"   0 "<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"  0  "<<endl<<"  0  "<<endl<<"0   0"<<endl<<"  0  "<<endl<<"     "<<endl<<"  0  "<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<" 0   "<<endl<<"   0 "<<endl<<"0   0"<<endl<<"   0 "<<endl<<"     "<<endl<<" 0   "<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0    "<<endl<<"    0"<<endl<<"0   0"<<endl<<"    0"<<endl<<"     "<<endl<<"0    "<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0    0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    swap(a[0],a[1]);
+	                    swap(a[4],a[5]);
+	                }
+	                else
+	                {
+	                    cout<<"0   0"<<endl<<"0    "<<endl<<"     "<<endl<<"    0"<<endl<<"0    0"<<endl<<"0    "<<endl<<"     "<<endl<<"    0";//2,4
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear(); 
+	                    cout<<"0   0"<<endl<<" 0   "<<endl<<"     "<<endl<<"   0 "<<endl<<"0    0"<<endl<<" 0   "<<endl<<"     "<<endl<<"   0 ";
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<"  0  "<<endl<<"     "<<endl<<"  0  "<<endl<<"0    0"<<endl<<"  0  "<<endl<<"     "<<endl<<"  0  ";
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<"   0 "<<endl<<"     "<<endl<<" 0   "<<endl<<"0    0"<<endl<<"   0 "<<endl<<"     "<<endl<<" 0   ";
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<"    0"<<endl<<"     "<<endl<<"0    "<<endl<<"0    0"<<endl<<"    0"<<endl<<"     "<<endl<<"0    ";
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0    0"<<endl<<endl<<"0   0"<<endl;
+	                    this_thread::sleep_for(chrono::milliseconds(55));
+	                    clear();
+	                    swap(a[2],a[3]);
+	                    swap(a[6],a[7]);
+	                }
+	                break;
+	            }
+	        }
+	        cout<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl<<endl<<"0   0"<<endl;
+	        this_thread::sleep_for(chrono::milliseconds(300));
+	        clear();
+	    }
+	    cout<<"1   2"<<endl<<endl<<"3   4"<<endl<<endl<<"5   6"<<endl<<endl<<"7   8"<<endl;
+	    cout<<"where is the right key?"<<endl;
+	    int choice;
+	    cin>>choice;
+	    if(a[(choice-1)]==1)
+	    {
+	        cout<<"you are right!"<<endl<<"you get "<<difficulty*10<<" points"<<endl;
+	        score+=difficulty*10;
+	    }
+	    else
+	    {
+	        cout<<"sorry,you are wrong!"<<endl<<"better luck next time!"<<endl;
+	    }
+	    goto start;
+	}
+	else if(a==4)
+	{
+		cout<<"please type save code:"<<endl;
+		int code;
+b:
+		cin>>code;
+		score=(code-13957)/19;
+		if(score<0||round(score)!=score)
+		{
+			cout<<"please type the correct code!"<<endl;
+			goto b;
+		}
+		cout<<"save loaded"<<endl;
+		goto start;
+	}
+	else if(a==5)
+	{
+		cout<<"your save code:"<<score*19+13957<<endl;
+		goto start;
+	}
+	else if(a==6)
+	{
+		cout<<"bye!"<<endl;
+	}
+	else
+	{
+		cout<<"this is not a choice!"<<endl;
+		goto start;
+	}
+	return 0;
+}
